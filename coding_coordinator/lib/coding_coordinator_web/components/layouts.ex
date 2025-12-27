@@ -173,7 +173,8 @@ defmodule CodingCoordinatorWeb.Layouts do
     <div class="relative flex h-8 w-24 items-center rounded-full border border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-800">
       <button
         class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
-        phx-click={JS.dispatch("phx:set-theme")}
+        type="button"
+        onclick="window.dispatchEvent(new CustomEvent('phx:set-theme', {detail: 'system'}))"
         data-phx-theme="system"
       >
         <.icon name="hero-computer-desktop-micro" class="size-4 opacity-75 hover:opacity-100" />
@@ -181,7 +182,8 @@ defmodule CodingCoordinatorWeb.Layouts do
 
       <button
         class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
-        phx-click={JS.dispatch("phx:set-theme")}
+        type="button"
+        onclick="window.dispatchEvent(new CustomEvent('phx:set-theme', {detail: 'light'}))"
         data-phx-theme="light"
       >
         <.icon name="hero-sun-micro" class="size-4 opacity-75 hover:opacity-100" />
@@ -189,7 +191,8 @@ defmodule CodingCoordinatorWeb.Layouts do
 
       <button
         class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
-        phx-click={JS.dispatch("phx:set-theme")}
+        type="button"
+        onclick="window.dispatchEvent(new CustomEvent('phx:set-theme', {detail: 'dark'}))"
         data-phx-theme="dark"
       >
         <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />

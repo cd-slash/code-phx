@@ -44,9 +44,7 @@
         &rbrace;);
 
         window.addEventListener("phx:set-theme", function(e) &lbrace;
-          if (e.target && e.target.dataset) &lbrace;
-            setTheme(e.target.dataset.phxTheme);
-          &rbrace;
+          setTheme(e.detail);
         &rbrace;);
       &rbrace;)();
     </script>
