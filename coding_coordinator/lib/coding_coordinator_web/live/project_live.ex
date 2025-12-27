@@ -106,7 +106,15 @@ defmodule CodingCoordinatorWeb.ProjectLive do
                             </div>
                           </td>
                           <td>
-                            <div class="badge {task_badge_color(task.status)}">
+                            <div class={[
+                              "badge",
+                              task.status == "pending" && "badge-neutral",
+                              task.status == "running" && "badge-info",
+                              task.status == "completed" && "badge-success",
+                              task.status == "failed" && "badge-error",
+                              task.status not in ["pending", "running", "completed", "failed"] &&
+                                "badge-neutral"
+                            ]}>
                               {task.status}
                             </div>
                           </td>
@@ -185,12 +193,6 @@ defmodule CodingCoordinatorWeb.ProjectLive do
   defp format_status("completed"), do: "Completed"
   defp format_status("failed"), do: "Failed"
   defp format_status(status), do: status
-
-  defp task_badge_color("pending"), do: "badge-neutral"
-  defp task_badge_color("running"), do: "badge-info"
-  defp task_badge_color("completed"), do: "badge-success"
-  defp task_badge_color("failed"), do: "badge-error"
-  defp task_badge_color(_), do: "badge-neutral"
 
   defp completed_count(tasks) do
     tasks

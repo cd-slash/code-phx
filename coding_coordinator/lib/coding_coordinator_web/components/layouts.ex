@@ -48,7 +48,7 @@ defmodule CodingCoordinatorWeb.Layouts do
                 <ul role="list" class="-mx-2 space-y-1">
                   <li>
                     <.link
-                      navigate={~p"/dashboard"}
+                      navigate={~p"/"}
                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
                     >
                       <.icon
