@@ -15,17 +15,19 @@ defmodule CodingCoordinatorWeb.ProjectsLive do
     <Layouts.app flash={@flash}>
       <div class="mb-8 flex justify-between items-center">
         <div>
-          <h1 class="text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">Projects</h1>
-          <p class="text-base-content/70">Manage and coordinate your development projects</p>
+          <h1 class="text-4xl font-bold mb-2 text-gray-900 dark:text-white">Projects</h1>
+          <p class="text-gray-600 dark:text-gray-400">
+            Manage and coordinate your development projects
+          </p>
         </div>
-        <button class="btn btn-primary">
+        <button class="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="h-5 w-5"
           >
             <path
               stroke-linecap="round"
@@ -37,43 +39,47 @@ defmodule CodingCoordinatorWeb.ProjectsLive do
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <%= for project <- @projects do %>
-          <div class="card bg-base-100 shadow-xl dark:bg-gray-800">
-            <div class="card-body">
+          <div class="rounded-xl bg-white shadow-lg dark:bg-gray-800">
+            <div class="p-6">
               <div class="flex justify-between items-start">
                 <div>
-                  <h2 class="card-title">
-                    <.link navigate={"/projects/#{project.id}"} class="link link-primary">
+                  <h2 class="text-lg font-semibold">
+                    <.link
+                      navigate={"/projects/#{project.id}"}
+                      class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+                    >
                       {project.name}
                     </.link>
                   </h2>
-                  <p class="text-sm text-base-content/70">{project.description}</p>
+                  <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{project.description}</p>
                 </div>
-                <div class={"badge #{badge_color(project.status)} whitespace-nowrap"}>
+                <div class={"inline-flex items-center rounded-md px-2 py-1 text-xs font-medium #{badge_color(project.status)} whitespace-nowrap"}>
                   {format_status(project.status)}
                 </div>
               </div>
               <div class="mt-4">
                 <div class="flex justify-between text-sm mb-1">
-                  <span>Progress</span>
+                  <span class="font-medium">Progress</span>
                   <span>{project.progress}%</span>
                 </div>
-                <progress
-                  class="progress progress-primary w-full"
-                  value={project.progress}
-                  max="100"
-                >
-                </progress>
+                <div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                  <div
+                    class="h-full bg-indigo-600 dark:bg-indigo-500"
+                    style={"width: #{project.progress}%"}
+                  >
+                  </div>
+                </div>
               </div>
-              <div class="flex justify-between items-center mt-4">
-                <div class="text-sm text-base-content/70">
+              <div class="mt-4 flex justify-between items-center">
+                <div class="text-sm text-gray-600 dark:text-gray-400">
                   <div>Tasks: {project.task_count}</div>
                   <div>Agents: {project.agent_count}</div>
                 </div>
-                <div class="card-actions justify-end">
-                  <button class="btn btn-sm">View</button>
-                </div>
+                <button class="rounded-md bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-gray-950/5 hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:ring-gray-700 dark:hover:bg-gray-600">
+                  View
+                </button>
               </div>
             </div>
           </div>

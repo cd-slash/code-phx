@@ -35,14 +35,12 @@ defmodule CodingCoordinatorWeb.Layouts do
 
   def app(assigns) do
     ~H"""
-    <div class="flex h-full bg-white dark:bg-gray-900 lg:static lg:overflow-visible">
+    <div class="flex h-full bg-gray-50 dark:bg-gray-900 lg:static lg:overflow-visible">
       <div class="fixed inset-0 z-50 hidden lg:flex lg:w-72 lg:flex-col">
         <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:border-gray-700 dark:bg-gray-800">
           <div class="flex h-16 shrink-0 items-center gap-2">
             <img src={~p"/images/logo.svg"} width="32" class="h-8 w-auto" />
-            <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              CodingCoordinator
-            </span>
+            <span class="text-lg font-semibold text-gray-900 dark:text-white">CodingCoordinator</span>
           </div>
           <nav class="flex flex-1 flex-col">
             <ul role="list" class="flex flex-1 flex-col gap-y-7">
@@ -51,7 +49,7 @@ defmodule CodingCoordinatorWeb.Layouts do
                   <li>
                     <.link
                       navigate={~p"/"}
-                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-indigo-400"
+                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-indigo-400"
                     >
                       <.icon
                         name="hero-home"
@@ -62,7 +60,7 @@ defmodule CodingCoordinatorWeb.Layouts do
                   <li>
                     <.link
                       navigate={~p"/projects"}
-                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-indigo-400"
+                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-indigo-400"
                     >
                       <.icon
                         name="hero-folder"
@@ -73,7 +71,7 @@ defmodule CodingCoordinatorWeb.Layouts do
                   <li>
                     <.link
                       navigate={~p"/tasks"}
-                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-indigo-400"
+                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-indigo-400"
                     >
                       <.icon
                         name="hero-clipboard-document-list"
@@ -84,7 +82,7 @@ defmodule CodingCoordinatorWeb.Layouts do
                 </ul>
               </li>
               <li class="-mx-6 mt-auto">
-                <div class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 dark:text-gray-100">
+                <div class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 dark:text-white">
                   <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600">
                     <span class="text-sm font-medium text-white">U</span>
                   </div>
@@ -97,12 +95,12 @@ defmodule CodingCoordinatorWeb.Layouts do
       </div>
 
       <div class="flex grow flex-col lg:pl-72">
-        <header class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:px-8 dark:bg-gray-800">
-          <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden dark:text-gray-300">
+        <header class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:px-8 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+          <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden dark:text-gray-200">
             <span class="sr-only">Open sidebar</span>
             <.icon name="hero-bars-3" class="size-6" />
           </button>
-          <div class="flex-1 text-sm/6 font-semibold text-gray-900 lg:hidden dark:text-gray-100">
+          <div class="flex-1 text-sm/6 font-semibold text-gray-900 lg:hidden dark:text-white">
             Menu
           </div>
           <div class="flex items-center gap-4">

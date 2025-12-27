@@ -16,36 +16,36 @@ defmodule CodingCoordinatorWeb.DashboardLive do
     ~H"""
     <Layouts.app flash={@flash}>
       <div class="mb-8">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Dashboard</h1>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Dashboard</h1>
         <p class="mt-2 text-gray-600 dark:text-gray-400">
           Monitor your coding agent coordination system
         </p>
       </div>
 
       <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800">
+        <div class="rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800">
           <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">
             Active Projects
           </dt>
-          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {@projects |> length()}
           </dd>
           <div class="mt-2 text-xs text-gray-400">Ongoing development</div>
         </div>
 
-        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800">
+        <div class="rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800">
           <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Active Tasks</dt>
-          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {@active_tasks |> length()}
           </dd>
           <div class="mt-2 text-xs text-gray-400">Running agents</div>
         </div>
 
-        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800">
+        <div class="rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6 dark:bg-gray-800">
           <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">
             Completed Tasks
           </dt>
-          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {@completed_tasks}
           </dd>
           <div class="mt-2 text-xs text-gray-400">Successfully executed</div>
@@ -53,9 +53,9 @@ defmodule CodingCoordinatorWeb.DashboardLive do
       </div>
 
       <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div class="overflow-hidden rounded-md bg-white shadow-sm dark:bg-gray-800">
+        <div class="rounded-md bg-white shadow-sm dark:bg-gray-800">
           <div class="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-900">
-            <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">Recent Projects</h3>
+            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Recent Projects</h3>
           </div>
           <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
             <%= for project <- @projects do %>
@@ -64,7 +64,7 @@ defmodule CodingCoordinatorWeb.DashboardLive do
                   <div class="flex-1">
                     <.link
                       navigate={"/projects/#{project.id}"}
-                      class="text-sm font-medium text-gray-900 hover:text-indigo-600 dark:text-gray-100 dark:hover:text-indigo-400"
+                      class="text-sm font-medium text-gray-900 hover:text-indigo-600 dark:text-white dark:hover:text-indigo-400"
                     >
                       {project.name}
                     </.link>
@@ -92,9 +92,9 @@ defmodule CodingCoordinatorWeb.DashboardLive do
           </ul>
         </div>
 
-        <div class="overflow-hidden rounded-md bg-white shadow-sm dark:bg-gray-800">
+        <div class="rounded-md bg-white shadow-sm dark:bg-gray-800">
           <div class="border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-900">
-            <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">Active Agents</h3>
+            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Active Agents</h3>
           </div>
           <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
             <%= for task <- @active_tasks do %>
@@ -104,7 +104,7 @@ defmodule CodingCoordinatorWeb.DashboardLive do
                     A{task.agent_id}
                   </div>
                   <div class="ml-4 flex-1">
-                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">
                       {task.description}
                     </p>
                     <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Agent {task.agent_id}</p>

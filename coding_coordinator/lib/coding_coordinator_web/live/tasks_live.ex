@@ -23,43 +23,43 @@ defmodule CodingCoordinatorWeb.TasksLive do
     ~H"""
     <Layouts.app flash={@flash}>
       <div class="mb-8">
-        <h1 class="text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">Tasks</h1>
-        <p class="text-base-content/70">Monitor and manage all agent tasks</p>
+        <h1 class="text-4xl font-bold mb-2 text-gray-900 dark:text-white">Tasks</h1>
+        <p class="text-gray-600 dark:text-gray-400">Monitor and manage all agent tasks</p>
       </div>
 
-      <div class="card bg-base-100 shadow-xl dark:bg-gray-800">
-        <div class="card-body">
+      <div class="rounded-xl bg-white shadow-lg dark:bg-gray-800">
+        <div class="p-6">
           <div class="flex flex-wrap gap-2 mb-4">
             <button
-              class={"btn btn-sm #{@filter == "all" && "btn-primary" || "btn-ghost"}"}
+              class={"rounded-md px-3 py-2 text-sm font-medium #{@filter == "all" && "bg-indigo-600 text-white" || "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"}"}
               phx-click="filter"
               phx-value-filter="all"
             >
               All
             </button>
             <button
-              class={"btn btn-sm #{@filter == "pending" && "btn-primary" || "btn-ghost"}"}
+              class={"rounded-md px-3 py-2 text-sm font-medium #{@filter == "pending" && "bg-indigo-600 text-white" || "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"}"}
               phx-click="filter"
               phx-value-filter="pending"
             >
               Pending
             </button>
             <button
-              class={"btn btn-sm #{@filter == "running" && "btn-primary" || "btn-ghost"}"}
+              class={"rounded-md px-3 py-2 text-sm font-medium #{@filter == "running" && "bg-indigo-600 text-white" || "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"}"}
               phx-click="filter"
               phx-value-filter="running"
             >
               Running
             </button>
             <button
-              class={"btn btn-sm #{@filter == "completed" && "btn-primary" || "btn-ghost"}"}
+              class={"rounded-md px-3 py-2 text-sm font-medium #{@filter == "completed" && "bg-indigo-600 text-white" || "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"}"}
               phx-click="filter"
               phx-value-filter="completed"
             >
               Completed
             </button>
             <button
-              class={"btn btn-sm #{@filter == "failed" && "btn-primary" || "btn-ghost"}"}
+              class={"rounded-md px-3 py-2 text-sm font-medium #{@filter == "failed" && "bg-indigo-600 text-white" || "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"}"}
               phx-click="filter"
               phx-value-filter="failed"
             >
@@ -68,57 +68,75 @@ defmodule CodingCoordinatorWeb.TasksLive do
           </div>
 
           <div class="overflow-x-auto">
-            <table class="table">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
-                <tr>
-                  <th>Task</th>
-                  <th>Project</th>
-                  <th>Agent</th>
-                  <th>Container</th>
-                  <th>Status</th>
-                  <th>Duration</th>
-                  <th>Actions</th>
+                <tr class="bg-gray-50 dark:bg-gray-900">
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                    Task
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                    Project
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                    Agent
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                    Container
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                    Status
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                    Duration
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                    Actions
+                  </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
                 <%= for task <- @tasks do %>
-                  <tr>
-                    <td>
-                      <div class="font-medium">{task.title}</div>
-                      <div class="text-sm text-base-content/70">{task.description}</div>
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td class="px-6 py-4">
+                      <div class="font-medium text-gray-900 dark:text-white">{task.title}</div>
+                      <div class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        {task.description}
+                      </div>
                     </td>
-                    <td>
+                    <td class="px-6 py-4">
                       <.link
                         navigate={"/projects/#{task.project_id}"}
-                        class="link link-primary"
+                        class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
                       >
                         {task.project_name}
                       </.link>
                     </td>
-                    <td>
+                    <td class="px-6 py-4">
                       <div class="flex items-center gap-2">
-                        <div class="avatar placeholder">
-                          <div class="bg-neutral text-neutral-content rounded-full w-8">
-                            <span class="text-xs">A{task.agent_id}</span>
-                          </div>
+                        <div class="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-sm font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                          A{task.agent_id}
                         </div>
-                        <div class="text-sm">Agent {task.agent_id}</div>
+                        <div class="text-sm text-gray-900 dark:text-white">Agent {task.agent_id}</div>
                       </div>
                     </td>
-                    <td>
-                      <code class="text-xs">{task.container}</code>
+                    <td class="px-6 py-4">
+                      <code class="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700 dark:bg-gray-900 dark:text-gray-300">
+                        {task.container}
+                      </code>
                     </td>
-                    <td>
+                    <td class="px-6 py-4">
                       <div class={task_badge_class(task.status)}>{task.status}</div>
                     </td>
-                    <td>
-                      <div class="text-sm">{task.duration}</div>
+                    <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
+                      {task.duration}
                     </td>
-                    <td>
+                    <td class="px-6 py-4">
                       <div class="flex gap-2">
-                        <button class="btn btn-ghost btn-xs">Logs</button>
+                        <button class="rounded-md px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700">
+                          Logs
+                        </button>
                         <%= if task.status in ["pending", "running"] do %>
-                          <button class="btn btn-ghost btn-xs text-error">
+                          <button class="rounded-md px-2 py-1 text-sm font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
                             Stop
                           </button>
                         <% end %>

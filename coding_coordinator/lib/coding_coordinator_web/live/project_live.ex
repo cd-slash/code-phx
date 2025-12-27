@@ -17,105 +17,134 @@ defmodule CodingCoordinatorWeb.ProjectLive do
     ~H"""
     <Layouts.app flash={@flash}>
       <div class="mb-8">
-        <.link navigate="/projects" class="link link-neutral">
+        <.link
+          navigate="/projects"
+          class="text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+        >
           ← Back to Projects
         </.link>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2">
-          <div class="card bg-base-100 shadow-xl mb-6 dark:bg-gray-800">
-            <div class="card-body">
+          <div class="rounded-xl bg-white shadow-lg mb-6 dark:bg-gray-800">
+            <div class="p-6">
               <div class="flex justify-between items-start">
                 <div>
-                  <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{@project.name}</h1>
-                  <p class="text-base-content/70 mt-2">{@project.description}</p>
+                  <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{@project.name}</h1>
+                  <p class="mt-2 text-gray-600 dark:text-gray-400">{@project.description}</p>
                 </div>
-                <div class={"badge #{badge_color(@project.status)} badge-lg whitespace-nowrap"}>
+                <div class={"inline-flex items-center rounded-md px-2 py-1 text-xs font-medium #{badge_color(@project.status)} whitespace-nowrap"}>
                   {format_status(@project.status)}
                 </div>
               </div>
               <div class="mt-4">
                 <div class="flex justify-between mb-1">
-                  <span class="font-medium">Overall Progress</span>
-                  <span class="font-medium">{@project.progress}%</span>
+                  <span class="font-medium text-gray-700 dark:text-gray-200">Overall Progress</span>
+                  <span class="font-medium text-gray-700 dark:text-gray-200">
+                    {@project.progress}%
+                  </span>
                 </div>
-                <progress
-                  class="progress progress-primary w-full"
-                  value={@project.progress}
-                  max="100"
-                >
-                </progress>
+                <div class="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                  <div
+                    class="h-full bg-indigo-600 dark:bg-indigo-500"
+                    style={"width: #{@project.progress}%"}
+                  >
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="card bg-base-100 shadow-xl dark:bg-gray-800">
-            <div class="card-body">
-              <h2 class="card-title mb-4">Tasks</h2>
+          <div class="rounded-xl bg-white shadow-lg dark:bg-gray-800">
+            <div class="p-6">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tasks</h2>
               <div class="overflow-x-auto">
-                <table class="table">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead>
-                    <tr>
-                      <th>Task</th>
-                      <th>Agent</th>
-                      <th>Container</th>
-                      <th>Status</th>
-                      <th>Actions</th>
+                    <tr class="bg-gray-50 dark:bg-gray-900">
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                        Task
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                        Agent
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                        Container
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                        Status
+                      </th>
+                      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
                     <%= for task <- @tasks do %>
-                      <tr>
-                        <td>
+                      <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td class="px-6 py-4">
                           <div class="flex items-center gap-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
                               fill="none"
-                              class="size-5 text-gray-400"
+                              class="size-5 text-gray-400 dark:text-gray-600"
                             >
                               <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-1.073-1.916 48.432 48.432 0 0 0-1.123-.081M9 18h3.75"
+                                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-1.073-1.916 48.432 48.432 0 0 0-1.123-.081M9 18h3.75"
                               />
                             </svg>
                             <div>
-                              <div class="font-medium">{task.title}</div>
-                              <div class="text-sm text-base-content/70">
+                              <div class="font-medium text-gray-900 dark:text-white">
+                                {task.title}
+                              </div>
+                              <div class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                                 Container: {task.container}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td>
+                        <td class="px-6 py-4">
                           <div class="flex items-center gap-2">
-                            <div class="avatar placeholder">
-                              <div class="bg-neutral text-neutral-content rounded-full w-8">
-                                <span class="text-xs">A{task.agent_id}</span>
-                              </div>
+                            <div class="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-sm font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                              A{task.agent_id}
                             </div>
-                            <div class="text-sm font-medium">Agent {task.agent_id}</div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                              Agent {task.agent_id}
+                            </div>
                           </div>
                         </td>
-                        <td>
+                        <td class="px-6 py-4">
+                          <code class="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700 dark:bg-gray-900 dark:text-gray-300">
+                            {task.container}
+                          </code>
+                        </td>
+                        <td class="px-6 py-4">
                           <div class={[
-                            "badge",
+                            "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium",
                             "whitespace-nowrap",
-                            task.status == "pending" && "badge-neutral",
-                            task.status == "running" && "badge-info",
-                            task.status == "completed" && "badge-success",
-                            task.status == "failed" && "badge-error",
+                            task.status == "pending" &&
+                              "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
+                            task.status == "running" &&
+                              "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+                            task.status == "completed" &&
+                              "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+                            task.status == "failed" &&
+                              "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400",
                             task.status not in ["pending", "running", "completed", "failed"] &&
-                              "badge-neutral"
+                              "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
                           ]}>
                             {task.status}
                           </div>
                         </td>
-                        <td>
-                          <button class="btn btn-ghost btn-xs">Details</button>
+                        <td class="px-6 py-4">
+                          <button class="rounded-md px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700">
+                            Details
+                          </button>
                         </td>
                       </tr>
                     <% end %>
@@ -127,27 +156,33 @@ defmodule CodingCoordinatorWeb.ProjectLive do
         </div>
 
         <div class="lg:col-span-1">
-          <div class="card bg-base-100 shadow-xl mb-6 dark:bg-gray-800">
-            <div class="card-body">
-              <h2 class="card-title">Project Details</h2>
-              <div class="stats stats-vertical shadow mt-4">
-                <div class="stat">
-                  <div class="stat-title">Total Tasks</div>
-                  <div class="stat-value text-2xl">{@project.task_count}</div>
+          <div class="rounded-xl bg-white shadow-lg mb-6 dark:bg-gray-800">
+            <div class="p-6">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Project Details</h2>
+              <div class="mt-4 grid grid-cols-1 gap-4">
+                <div class="rounded-lg bg-gray-50 px-4 py-3 dark:bg-gray-900">
+                  <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tasks</div>
+                  <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">
+                    {@project.task_count}
+                  </div>
                 </div>
-                <div class="stat">
-                  <div class="stat-title">Active Agents</div>
-                  <div class="stat-value text-2xl">{@project.agent_count}</div>
+                <div class="rounded-lg bg-gray-50 px-4 py-3 dark:bg-gray-900">
+                  <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Active Agents
+                  </div>
+                  <div class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">
+                    {@project.agent_count}
+                  </div>
                 </div>
-                <div class="stat">
-                  <div class="stat-title">Completed</div>
-                  <div class="stat-value text-2xl text-success">
+                <div class="rounded-lg bg-gray-50 px-4 py-3 dark:bg-gray-900">
+                  <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Completed</div>
+                  <div class="mt-1 text-2xl font-semibold text-green-600 dark:text-green-400">
                     {completed_count(@tasks)}
                   </div>
                 </div>
-                <div class="stat">
-                  <div class="stat-title">Failed</div>
-                  <div class="stat-value text-2xl text-error">
+                <div class="rounded-lg bg-gray-50 px-4 py-3 dark:bg-gray-900">
+                  <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Failed</div>
+                  <div class="mt-1 text-2xl font-semibold text-red-600 dark:text-red-400">
                     {failed_count(@tasks)}
                   </div>
                 </div>
@@ -155,19 +190,21 @@ defmodule CodingCoordinatorWeb.ProjectLive do
             </div>
           </div>
 
-          <div class="card bg-base-100 shadow-xl dark:bg-gray-800">
-            <div class="card-body">
-              <h2 class="card-title">Plan</h2>
-              <div class="text-sm text-base-content/70 mt-2">
+          <div class="rounded-xl bg-white shadow-lg dark:bg-gray-800">
+            <div class="p-6">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Plan</h2>
+              <div class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 <p class="mb-2">
                   This project will be executed by autonomous coding agents working in parallel on containerized environments.
                 </p>
                 <p>
-                  Each task is assigned to a headless agent that operates in isolation, with coordination managed by the central system.
+                  Each task is assigned to a headless agent that operates in isolation, with coordination managed by central system.
                 </p>
               </div>
-              <div class="card-actions justify-end mt-4">
-                <button class="btn btn-primary btn-sm">View Full Plan</button>
+              <div class="mt-4 flex justify-end">
+                <button class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+                  View Full Plan
+                </button>
               </div>
             </div>
           </div>
