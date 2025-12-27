@@ -21,138 +21,117 @@ defmodule CodingCoordinatorWeb.TasksLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-base-200">
-      <div class="navbar bg-base-100 shadow-lg">
-        <div class="flex-1">
-          <a class="btn btn-ghost text-xl">Coding Coordinator</a>
-        </div>
-        <div class="flex-none">
-          <ul class="menu menu-horizontal px-1">
-            <li>
-              <.link navigate="/">Dashboard</.link>
-            </li>
-            <li>
-              <.link navigate="/projects">Projects</.link>
-            </li>
-            <li>
-              <.link navigate="/tasks">Tasks</.link>
-            </li>
-          </ul>
-        </div>
+    <Layouts.app flash={@flash}>
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">Tasks</h1>
+        <p class="text-base-content/70">Monitor and manage all agent tasks</p>
       </div>
 
-      <div class="container mx-auto p-6">
-        <div class="mb-8">
-          <h1 class="text-4xl font-bold mb-2">Tasks</h1>
-          <p class="text-base-content/70">Monitor and manage all agent tasks</p>
-        </div>
+      <div class="card bg-base-100 shadow-xl dark:bg-gray-800">
+        <div class="card-body">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <button
+              class={"btn btn-sm #{@filter == "all" && "btn-primary" || "btn-ghost"}"}
+              phx-click="filter"
+              phx-value-filter="all"
+            >
+              All
+            </button>
+            <button
+              class={"btn btn-sm #{@filter == "pending" && "btn-primary" || "btn-ghost"}"}
+              phx-click="filter"
+              phx-value-filter="pending"
+            >
+              Pending
+            </button>
+            <button
+              class={"btn btn-sm #{@filter == "running" && "btn-primary" || "btn-ghost"}"}
+              phx-click="filter"
+              phx-value-filter="running"
+            >
+              Running
+            </button>
+            <button
+              class={"btn btn-sm #{@filter == "completed" && "btn-primary" || "btn-ghost"}"}
+              phx-click="filter"
+              phx-value-filter="completed"
+            >
+              Completed
+            </button>
+            <button
+              class={"btn btn-sm #{@filter == "failed" && "btn-primary" || "btn-ghost"}"}
+              phx-click="filter"
+              phx-value-filter="failed"
+            >
+              Failed
+            </button>
+          </div>
 
-        <div class="card bg-base-100 shadow-xl">
-          <div class="card-body">
-            <div class="flex flex-wrap gap-2 mb-4">
-              <button
-                class={"btn btn-sm #{@filter == "all" && "btn-primary" || "btn-ghost"}"}
-                phx-click="filter"
-                phx-value-filter="all"
-              >
-                All
-              </button>
-              <button
-                class={"btn btn-sm #{@filter == "pending" && "btn-primary" || "btn-ghost"}"}
-                phx-click="filter"
-                phx-value-filter="pending"
-              >
-                Pending
-              </button>
-              <button
-                class={"btn btn-sm #{@filter == "running" && "btn-primary" || "btn-ghost"}"}
-                phx-click="filter"
-                phx-value-filter="running"
-              >
-                Running
-              </button>
-              <button
-                class={"btn btn-sm #{@filter == "completed" && "btn-primary" || "btn-ghost"}"}
-                phx-click="filter"
-                phx-value-filter="completed"
-              >
-                Completed
-              </button>
-              <button
-                class={"btn btn-sm #{@filter == "failed" && "btn-primary" || "btn-ghost"}"}
-                phx-click="filter"
-                phx-value-filter="failed"
-              >
-                Failed
-              </button>
-            </div>
-
-            <div class="overflow-x-auto">
-              <table class="table">
-                <thead>
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Project</th>
+                  <th>Agent</th>
+                  <th>Container</th>
+                  <th>Status</th>
+                  <th>Duration</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= for task <- @tasks do %>
                   <tr>
-                    <th>Task</th>
-                    <th>Project</th>
-                    <th>Agent</th>
-                    <th>Container</th>
-                    <th>Status</th>
-                    <th>Duration</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%= for task <- @tasks do %>
-                    <tr>
-                      <td>
-                        <div class="font-medium">{task.title}</div>
-                        <div class="text-sm text-base-content/70">{task.description}</div>
-                      </td>
-                      <td>
-                        <.link
-                          navigate={"/projects/#{task.project_id}"}
-                          class="link link-primary"
-                        >
-                          {task.project_name}
-                        </.link>
-                      </td>
-                      <td>
-                        <div class="flex items-center gap-2">
-                          <div class="avatar placeholder">
-                            <div class="bg-neutral text-neutral-content rounded-full w-8">
-                              <span class="text-xs">A{task.agent_id}</span>
-                            </div>
+                    <td>
+                      <div class="font-medium">{task.title}</div>
+                      <div class="text-sm text-base-content/70">{task.description}</div>
+                    </td>
+                    <td>
+                      <.link
+                        navigate={"/projects/#{task.project_id}"}
+                        class="link link-primary"
+                      >
+                        {task.project_name}
+                      </.link>
+                    </td>
+                    <td>
+                      <div class="flex items-center gap-2">
+                        <div class="avatar placeholder">
+                          <div class="bg-neutral text-neutral-content rounded-full w-8">
+                            <span class="text-xs">A{task.agent_id}</span>
                           </div>
-                          <div class="text-sm">Agent {task.agent_id}</div>
                         </div>
-                      </td>
-                      <td>
-                        <code class="text-xs">{task.container}</code>
-                      </td>
-                      <td>
-                        <div class={task_badge_class(task.status)}>{task.status}</div>
-                      </td>
-                      <td>
-                        <div class="text-sm">{task.duration}</div>
-                      </td>
-                      <td>
-                        <div class="flex gap-2">
-                          <button class="btn btn-ghost btn-xs">Logs</button>
-                          <%= if task.status in ["pending", "running"] do %>
-                            <button class="btn btn-ghost btn-xs text-error">
-                              Stop
-                            </button>
-                          <% end %>
-                        </div>
-                      </td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
+                        <div class="text-sm">Agent {task.agent_id}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <code class="text-xs">{task.container}</code>
+                    </td>
+                    <td>
+                      <div class={task_badge_class(task.status)}>{task.status}</div>
+                    </td>
+                    <td>
+                      <div class="text-sm">{task.duration}</div>
+                    </td>
+                    <td>
+                      <div class="flex gap-2">
+                        <button class="btn btn-ghost btn-xs">Logs</button>
+                        <%= if task.status in ["pending", "running"] do %>
+                          <button class="btn btn-ghost btn-xs text-error">
+                            Stop
+                          </button>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </div>
+    </Layouts.app>
     """
   end
 

@@ -12,95 +12,74 @@ defmodule CodingCoordinatorWeb.ProjectsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-base-200">
-      <div class="navbar bg-base-100 shadow-lg">
-        <div class="flex-1">
-          <a class="btn btn-ghost text-xl">Coding Coordinator</a>
+    <Layouts.app flash={@flash}>
+      <div class="mb-8 flex justify-between items-center">
+        <div>
+          <h1 class="text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">Projects</h1>
+          <p class="text-base-content/70">Manage and coordinate your development projects</p>
         </div>
-        <div class="flex-none">
-          <ul class="menu menu-horizontal px-1">
-            <li>
-              <.link navigate="/">Dashboard</.link>
-            </li>
-            <li>
-              <.link navigate="/projects">Projects</.link>
-            </li>
-            <li>
-              <.link navigate="/tasks">Tasks</.link>
-            </li>
-          </ul>
-        </div>
+        <button class="btn btn-primary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          New Project
+        </button>
       </div>
 
-      <div class="container mx-auto p-6">
-        <div class="mb-8 flex justify-between items-center">
-          <div>
-            <h1 class="text-4xl font-bold mb-2">Projects</h1>
-            <p class="text-base-content/70">Manage and coordinate your development projects</p>
-          </div>
-          <button class="btn btn-primary">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            New Project
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <%= for project <- @projects do %>
-            <div class="card bg-base-100 shadow-xl">
-              <div class="card-body">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <h2 class="card-title">
-                      <.link navigate={"/projects/#{project.id}"} class="link link-primary">
-                        {project.name}
-                      </.link>
-                    </h2>
-                    <p class="text-sm text-base-content/70">{project.description}</p>
-                  </div>
-                  <div class={"badge #{badge_color(project.status)} whitespace-nowrap"}>
-                    {format_status(project.status)}
-                  </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <%= for project <- @projects do %>
+          <div class="card bg-base-100 shadow-xl dark:bg-gray-800">
+            <div class="card-body">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h2 class="card-title">
+                    <.link navigate={"/projects/#{project.id}"} class="link link-primary">
+                      {project.name}
+                    </.link>
+                  </h2>
+                  <p class="text-sm text-base-content/70">{project.description}</p>
                 </div>
-                <div class="mt-4">
-                  <div class="flex justify-between text-sm mb-1">
-                    <span>Progress</span>
-                    <span>{project.progress}%</span>
-                  </div>
-                  <progress
-                    class="progress progress-primary w-full"
-                    value={project.progress}
-                    max="100"
-                  >
-                  </progress>
+                <div class={"badge #{badge_color(project.status)} whitespace-nowrap"}>
+                  {format_status(project.status)}
                 </div>
-                <div class="flex justify-between items-center mt-4">
-                  <div class="text-sm text-base-content/70">
-                    <div>Tasks: {project.task_count}</div>
-                    <div>Agents: {project.agent_count}</div>
-                  </div>
-                  <div class="card-actions justify-end">
-                    <button class="btn btn-sm">View</button>
-                  </div>
+              </div>
+              <div class="mt-4">
+                <div class="flex justify-between text-sm mb-1">
+                  <span>Progress</span>
+                  <span>{project.progress}%</span>
+                </div>
+                <progress
+                  class="progress progress-primary w-full"
+                  value={project.progress}
+                  max="100"
+                >
+                </progress>
+              </div>
+              <div class="flex justify-between items-center mt-4">
+                <div class="text-sm text-base-content/70">
+                  <div>Tasks: {project.task_count}</div>
+                  <div>Agents: {project.agent_count}</div>
+                </div>
+                <div class="card-actions justify-end">
+                  <button class="btn btn-sm">View</button>
                 </div>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
-    </div>
+    </Layouts.app>
     """
   end
 
