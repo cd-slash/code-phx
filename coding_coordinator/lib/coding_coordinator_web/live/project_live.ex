@@ -51,7 +51,7 @@ defmodule CodingCoordinatorWeb.ProjectLive do
                     <h1 class="text-3xl font-bold">{@project.name}</h1>
                     <p class="text-base-content/70 mt-2">{@project.description}</p>
                   </div>
-                  <div class={"badge #{badge_color(@project.status)} badge-lg"}>
+                  <div class={"badge #{badge_color(@project.status)} badge-lg whitespace-nowrap"}>
                     {format_status(@project.status)}
                   </div>
                 </div>
@@ -108,6 +108,7 @@ defmodule CodingCoordinatorWeb.ProjectLive do
                           <td>
                             <div class={[
                               "badge",
+                              "whitespace-nowrap",
                               task.status == "pending" && "badge-neutral",
                               task.status == "running" && "badge-info",
                               task.status == "completed" && "badge-success",

@@ -136,7 +136,7 @@ defmodule CodingCoordinatorWeb.DashboardLive do
                         {project.name}
                       </.link>
                       <div class="mt-1 flex items-center">
-                        <div class={"mr-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium #{project_badge_classes(project.status)}"}>
+                        <div class={"mr-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium #{project_badge_classes(project.status)} whitespace-nowrap"}>
                           {format_status(project.status)}
                         </div>
                         <div class="flex-1">

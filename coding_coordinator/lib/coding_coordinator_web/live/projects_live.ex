@@ -70,7 +70,7 @@ defmodule CodingCoordinatorWeb.ProjectsLive do
                     </h2>
                     <p class="text-sm text-base-content/70">{project.description}</p>
                   </div>
-                  <div class={"badge #{badge_color(project.status)}"}>
+                  <div class={"badge #{badge_color(project.status)} whitespace-nowrap"}>
                     {format_status(project.status)}
                   </div>
                 </div>

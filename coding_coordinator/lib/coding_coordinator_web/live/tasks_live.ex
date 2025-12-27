@@ -156,11 +156,11 @@ defmodule CodingCoordinatorWeb.TasksLive do
     """
   end
 
-  defp task_badge_class("pending"), do: "badge badge-neutral"
-  defp task_badge_class("running"), do: "badge badge-info"
-  defp task_badge_class("completed"), do: "badge badge-success"
-  defp task_badge_class("failed"), do: "badge badge-error"
-  defp task_badge_class(_), do: "badge badge-neutral"
+  defp task_badge_class("pending"), do: "badge badge-neutral whitespace-nowrap"
+  defp task_badge_class("running"), do: "badge badge-info whitespace-nowrap"
+  defp task_badge_class("completed"), do: "badge badge-success whitespace-nowrap"
+  defp task_badge_class("failed"), do: "badge badge-error whitespace-nowrap"
+  defp task_badge_class(_), do: "badge badge-neutral whitespace-nowrap"
 
   defp get_filtered_tasks("all"), do: get_all_tasks()
 

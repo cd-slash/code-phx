@@ -7,27 +7,51 @@
     <.live_title default="CodingCoordinator" suffix=" · Phoenix Framework">
       {assigns[:page_title]}
     </.live_title>
+    <script>
+      (function() &lbrace;
+        const getTheme = function() &lbrace;
+          try &lbrace;
+            return localStorage.getItem("phx:theme") || "system";
+          &rbrace; catch &lbrace;
+            return "system";
+          &rbrace;
+        &rbrace;;
+
+        const setTheme = function(theme) &lbrace;
+          const html = document.documentElement;
+          if (theme === "system") &lbrace;
+            try &lbrace;
+              localStorage.removeItem("phx:theme");
+            &rbrace; catch &lbrace;
+            &rbrace;
+            html.removeAttribute("data-theme");
+          &rbrace; else &lbrace;
+            try &lbrace;
+              localStorage.setItem("phx:theme", theme);
+            &rbrace; catch &lbrace;
+            &rbrace;
+            html.setAttribute("data-theme", theme);
+          &rbrace;
+        &rbrace;;
+
+        const theme = getTheme();
+        setTheme(theme);
+
+        window.addEventListener("storage", function(e) &lbrace;
+          if (e.key === "phx:theme") &lbrace;
+            setTheme(e.newValue || "system");
+          &rbrace;
+        &rbrace;);
+
+        window.addEventListener("phx:set-theme", function(e) &lbrace;
+          if (e.target && e.target.dataset) &lbrace;
+            setTheme(e.target.dataset.phxTheme);
+          &rbrace;
+        &rbrace;);
+      &rbrace;)();
+    </script>
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
-    </script>
-    <script>
-      (() => {
-        const setTheme = (theme) => {
-          if (theme === "system") {
-            localStorage.removeItem("phx:theme");
-            document.documentElement.removeAttribute("data-theme");
-          } else {
-            localStorage.setItem("phx:theme", theme);
-            document.documentElement.setAttribute("data-theme", theme);
-          }
-        };
-        if (!document.documentElement.hasAttribute("data-theme")) {
-          setTheme(localStorage.getItem("phx:theme") || "system");
-        }
-        window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
-        
-        window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));
-      })();
     </script>
   </head>
   <body>
