@@ -170,9 +170,9 @@ defmodule CodingCoordinatorWeb.Layouts do
   """
   def theme_toggle(assigns) do
     ~H"""
-    <div class="relative flex h-8 w-24 items-center rounded-full border border-gray-300 bg-gray-100">
+    <div class="relative flex h-8 w-24 items-center rounded-full border border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-800">
       <button
-        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200"
+        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="system"
       >
@@ -180,7 +180,7 @@ defmodule CodingCoordinatorWeb.Layouts do
       </button>
 
       <button
-        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200"
+        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="light"
       >
@@ -188,7 +188,7 @@ defmodule CodingCoordinatorWeb.Layouts do
       </button>
 
       <button
-        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200"
+        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="dark"
       >
