@@ -1,4 +1,4 @@
-# Coding Coordinator - Phoenix + Inertia.js + React + Tailwind v4 + shadcn/ui
+# Coding Coordinator - Phoenix + LiveView + Tailwind v4 + DaisyUI
 
 ## Status: ✅ Working
 
@@ -15,58 +15,55 @@ coding_coordinator/
 │   │   └── repo.ex               # Ecto repository
 │   └── coding_coordinator_web/
 │       ├── controllers/
-│       │   ├── page_controller.ex   # Demo pages controller
-│       │   └── error_json.ex
-│       ├── layouts/
-│       │   └── layouts.ex        # Phoenix layout module
-│       ├── endpoint.ex             # Phoenix endpoint with Inertia
-│       ├── router.ex              # Routes for demo pages
+│       │   ├── page_controller.ex   # Pages controller
+│       │   └── error_html.ex
+│       ├── components/
+│       │   ├── layouts/
+│       │   │   └── root.html.heex  # Root layout
+│       │   ├── core_components.ex  # Core LiveView components
+│       │   └── layouts.ex          # Layout helpers
+│       ├── live/
+│       │   ├── dashboard_live.ex    # Dashboard LiveView
+│       │   ├── projects_live.ex     # Projects list LiveView
+│       │   ├── project_live.ex      # Project detail LiveView
+│       │   └── tasks_live.ex        # Tasks LiveView
+│       ├── endpoint.ex             # Phoenix endpoint
+│       ├── router.ex              # Routes
 │       └── telemetry.ex
 ├── assets/
 │   ├── js/
-│   │   ├── app.tsx              # Inertia React entry point
-│   │   ├── components/
-│   │   │   └── ui/             # shadcn/ui components
-│   │   │       ├── button.tsx
-│   │   │       ├── badge.tsx
-│   │   │       └── card.tsx
-│   │   ├── lib/
-│   │   │   └── utils.ts         # Utility functions (cn)
-│   │   └── pages/
-│   │       ├── Index.tsx         # Landing page
-│   │       ├── Projects.tsx       # Projects list
-│   │       └── Project.tsx      # Project detail view
+│   │   └── app.js               # JavaScript entry point
 │   ├── css/
-│   │   └── app.css             # Tailwind v4 styles
-│   └── package.json             # NPM dependencies
+│   │   └── app.css             # Tailwind v4 + DaisyUI styles
+│   └── vendor/
+│       ├── daisyui.js
+│       ├── daisyui-theme.js
+│       ├── heroicons.js
+│       └── topbar.js
 └── config/
     ├── config.exs                # Base configuration
     ├── dev.exs                 # Dev config with Redis settings
-    └── runtime.exs
+    ├── prod.exs                # Production config
+    ├── runtime.exs             # Runtime configuration
+    └── test.exs                # Test configuration
+```
 
 ## Features Implemented
 
 ### Backend (Phoenix + Elixir)
-- **Inertia.js Integration**: Plug configured in endpoint for seamless SPA
+- **LiveView**: Server-rendered, real-time interactive UI
 - **Redis Connection**: GenServer-based Redis client with TLS support
   - Host: redis.banjo-capella.ts.net
   - Port: 443 with TLS
   - Note: Currently configured but may not connect without proper certificates
-- **Demo Pages**:
-  - `/` - Landing page
-  - `/projects` - List of coding projects
-  - `/projects/:id` - Project detail with tasks and agents
 
-### Frontend (React + Inertia.js)
-- **Inertia.js React Adapter**: Client-side routing and state management
-- **shadcn/ui Components**:
-  - Button (multiple variants)
-  - Badge (status indicators)
-  - Card (content containers)
+### Frontend (LiveView + Tailwind + DaisyUI)
+- **DaisyUI Components**: Beautiful UI components built on Tailwind CSS
+- **Heroicons**: Icon set for UI elements
 - **Tailwind v4**: Modern CSS utility classes
-- **Demo Pages**:
-  - Index - Gradient landing with feature cards
-  - Projects - Project list with status badges
+- **LiveViews**:
+  - Dashboard - Overview with project statistics
+  - Projects - Project list with status indicators
   - Project - Task list and agent management view
 
 ## Running the Project
@@ -82,23 +79,16 @@ The server will be available at **http://localhost:4000**
 
 ### Available Pages
 
-- **http://localhost:4000/** - Landing page with feature overview
-- **http://localhost:4000/projects** - Projects list (3 demo projects)
-- **http://localhost:4000/projects/1** - Project detail view
-
-### Frontend Assets
-
-Build JavaScript (if needed):
-```bash
-cd coding_coordinator/assets
-npx esbuild js/app.tsx --bundle --target=es2022 --format=esm --outfile=../priv/static/assets/js/app.js --loader:.tsx=tsx --jsx=automatic --external:/fonts/* --external:/images/* --alias:@=.
-```
+- **http://localhost:4000/** - Landing page
+- **http://localhost:4000/dashboard** - Dashboard
+- **http://localhost:4000/projects** - Projects list
+- **http://localhost:4000/projects/:id** - Project detail view
 
 ## Known Issues & Notes
 
 1. **Redis Connection**: The Redis connection is configured but may not connect without proper SSL certificates. The application starts successfully even if Redis fails to connect.
 
-2. **PostgreSQL**: Database is configured but not required for the demo pages. No tables need to be created for the basic demo.
+2. **Database**: SQLite is configured and a dev database exists at `priv/dev.db`.
 
 3. **Tailwind Watch**: The watchman command is not available on this system. Tailwind builds once and doesn't watch for changes.
 
@@ -107,7 +97,7 @@ npx esbuild js/app.tsx --bundle --target=es2022 --format=esm --outfile=../priv/s
 1. **Container Management**: Add Docker integration for spinning up headless agents
 2. **Task Queue**: Implement job queue using Redis
 3. **AI Integration**: Connect to LLM APIs for planning and execution
-4. **Agent Communication**: WebSocket channels for real-time agent updates
+4. **Real-time Updates**: Leverage LiveView and PubSub for agent status updates
 5. **File Persistence**: Store generated code in S3 or local storage
 6. **Authentication**: User accounts and project ownership
 7. **Database Models**: Add Project, Task, Agent, and Execution schemas
