@@ -35,38 +35,84 @@ defmodule CodingCoordinatorWeb.Layouts do
 
   def app(assigns) do
     ~H"""
-    <header class="navbar px-4 sm:px-6 lg:px-8">
-      <div class="flex-1">
-        <a href="/" class="flex-1 flex w-fit items-center gap-2">
-          <img src={~p"/images/logo.svg"} width="36" />
-          <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
-        </a>
+    <div class="flex h-full bg-white lg:static lg:overflow-visible">
+      <div class="fixed inset-0 z-50 hidden lg:flex lg:w-72 lg:flex-col">
+        <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+          <div class="flex h-16 shrink-0 items-center gap-2">
+            <img src={~p"/images/logo.svg"} width="32" class="h-8 w-auto" />
+            <span class="text-lg font-semibold text-gray-900">CodingCoordinator</span>
+          </div>
+          <nav class="flex flex-1 flex-col">
+            <ul role="list" class="flex flex-1 flex-col gap-y-7">
+              <li>
+                <ul role="list" class="-mx-2 space-y-1">
+                  <li>
+                    <.link
+                      navigate={~p"/dashboard"}
+                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+                    >
+                      <.icon
+                        name="hero-home"
+                        class="size-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
+                      /> Dashboard
+                    </.link>
+                  </li>
+                  <li>
+                    <.link
+                      navigate={~p"/projects"}
+                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+                    >
+                      <.icon
+                        name="hero-folder"
+                        class="size-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
+                      /> Projects
+                    </.link>
+                  </li>
+                  <li>
+                    <.link
+                      navigate={~p"/tasks"}
+                      class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+                    >
+                      <.icon
+                        name="hero-clipboard-document-list"
+                        class="size-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
+                      /> Tasks
+                    </.link>
+                  </li>
+                </ul>
+              </li>
+              <li class="-mx-6 mt-auto">
+                <div class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600">
+                    <span class="text-sm font-medium text-white">U</span>
+                  </div>
+                  <span>User</span>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
-      <div class="flex-none">
-        <ul class="flex flex-column px-1 space-x-4 items-center">
-          <li>
-            <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
-          </li>
-          <li>
-            <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
-          </li>
-          <li>
-            <.theme_toggle />
-          </li>
-          <li>
-            <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
-              Get Started <span aria-hidden="true">&rarr;</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </header>
 
-    <main class="px-4 py-20 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl space-y-4">
-        {render_slot(@inner_block)}
+      <div class="flex grow flex-col lg:pl-72">
+        <header class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:px-8">
+          <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden">
+            <span class="sr-only">Open sidebar</span>
+            <.icon name="hero-bars-3" class="size-6" />
+          </button>
+          <div class="flex-1 text-sm/6 font-semibold text-gray-900 lg:hidden">Menu</div>
+          <div class="flex items-center gap-4">
+            <.theme_toggle />
+          </div>
+        </header>
+
+        <main class="flex grow">
+          <div class="px-4 py-8 sm:px-6 lg:px-8 w-full">
+            {render_slot(@inner_block)}
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
 
     <.flash_group flash={@flash} />
     """
@@ -122,11 +168,9 @@ defmodule CodingCoordinatorWeb.Layouts do
   """
   def theme_toggle(assigns) do
     ~H"""
-    <div class="card relative flex flex-row items-center border-2 border-base-300 bg-base-300 rounded-full">
-      <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=light]_&]:left-1/3 [[data-theme=dark]_&]:left-2/3 transition-[left]" />
-
+    <div class="relative flex h-8 w-24 items-center rounded-full border border-gray-300 bg-gray-100">
       <button
-        class="flex p-2 cursor-pointer w-1/3"
+        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200"
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="system"
       >
@@ -134,7 +178,7 @@ defmodule CodingCoordinatorWeb.Layouts do
       </button>
 
       <button
-        class="flex p-2 cursor-pointer w-1/3"
+        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200"
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="light"
       >
@@ -142,7 +186,7 @@ defmodule CodingCoordinatorWeb.Layouts do
       </button>
 
       <button
-        class="flex p-2 cursor-pointer w-1/3"
+        class="flex h-full w-1/3 items-center justify-center transition-colors hover:bg-gray-200"
         phx-click={JS.dispatch("phx:set-theme")}
         data-phx-theme="dark"
       >
