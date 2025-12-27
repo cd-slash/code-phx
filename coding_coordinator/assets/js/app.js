@@ -22,7 +22,7 @@ import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
-import {hooks as colocatedHooks} from "phoenix_colocated/coding_coordinator"
+import {hooks as colocatedHooks} from "phoenix_live_view/colocated-hooks"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
@@ -53,3 +53,4 @@ window.liveSocket = liveSocket
 //
 // To disable it temporarily, you can uncomment the line below:
 //     // import "./live_reload/disabled"
+
