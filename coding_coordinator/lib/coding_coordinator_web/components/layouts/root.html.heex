@@ -17,6 +17,11 @@
           &rbrace;
         &rbrace;;
 
+        const applySystemTheme = function() &lbrace;
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          return prefersDark ? "dark" : "light";
+        &rbrace;;
+
         const setTheme = function(theme) &lbrace;
           const html = document.documentElement;
           if (theme === "system") &lbrace;
@@ -24,7 +29,9 @@
               localStorage.removeItem("phx:theme");
             &rbrace; catch &lbrace;
             &rbrace;
+            const systemTheme = applySystemTheme();
             html.removeAttribute("data-theme");
+            html.setAttribute("data-theme", systemTheme);
           &rbrace; else &lbrace;
             try &lbrace;
               localStorage.setItem("phx:theme", theme);
@@ -45,6 +52,14 @@
 
         window.addEventListener("phx:set-theme", function(e) &lbrace;
           setTheme(e.detail);
+        &rbrace;);
+
+        // Listen for system theme changes
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(e) &lbrace;
+          const currentTheme = getTheme();
+          if (currentTheme === "system") &lbrace;
+            setTheme("system");
+          &rbrace;
         &rbrace;);
       &rbrace;)();
     </script>
